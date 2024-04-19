@@ -1,4 +1,4 @@
-<?php
+1<?php
 require_once 'config.php';
 final class Connection
 {
@@ -43,8 +43,8 @@ final class Connection
 
 $pdo = Connection::getInstance()::getConnection();
 $queryGetMessages = "SELECT users.name, users.email, users.avatar, messages.message, messages.file, messages.date
-    FROM users 
-    INNER JOIN messages 
+    FROM users
+    INNER JOIN messages
     ON users.id=messages.user_id;";
 
 $qryMessages = $pdo->prepare($queryGetMessages);
