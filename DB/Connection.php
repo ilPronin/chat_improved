@@ -1,4 +1,4 @@
-1<?php
+    <?php
 require_once 'config.php';
 final class Connection
 {
