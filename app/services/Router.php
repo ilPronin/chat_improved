@@ -16,17 +16,15 @@ class Router
 
     public static function enable(): void
     {
-        $page = $_GET['q'];
+        $page = $_GET['q'] ?? '';
 
         foreach (self::$list as $route) {
             if ($route['uri'] === '/' . $page){
                 require_once 'views/pages/' . $route['pageName'] . '.php';
-                echo $page;
-                exit();
+                die();
             }
-            echo "ну и тут";
-            self::ShowPageNotFound();
         }
+        self::ShowPageNotFound();
     }
 
     private static function ShowPageNotFound(): void
