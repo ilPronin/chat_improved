@@ -9,7 +9,7 @@ use App\Services\Page;
 <?php Page::addHead('REGISTRATION'); ?>
 <body>
 <div class="center">
-    <form action="">
+    <form action="/auth/register" method="post" enctype="multipart/form-data">
         <h1 class="title">РЕГИСТРАЦИЯ</h1>
 
         <div class="form-group">
@@ -39,7 +39,6 @@ use App\Services\Page;
         <div class="upload_file">
             <input type="file" id="avatar" name="avatar">
             <label class="input-file" for="avatar">Загрузите аватар</label>
-            <!--                <span class="input-file-btn">Выберите фото</span>-->
         </div>
 
         <div class="password-group">
@@ -68,7 +67,7 @@ use App\Services\Page;
         </div>
 
         <button type="submit" id="submit">
-            ВОЙТИ
+            ЗАРЕГИСТРИРОВАТЬСЯ
         </button>
 
         <div class="signup_link">
