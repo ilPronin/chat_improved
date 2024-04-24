@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Services\Validator;
 use App\Services\Router;
+use App\Services\Helper;
 
 class Auth
 {
@@ -29,6 +30,7 @@ class Auth
             Router::redirect('/register');
         }
 
+        Helper::uploadAvatar($avatar);
         echo "Валидация прошла успешно, движемся дальше!";
     }
 }
