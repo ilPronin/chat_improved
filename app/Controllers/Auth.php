@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Services\Helper;
 use App\Services\Validator;
 use App\Services\Router;
 
@@ -29,6 +30,8 @@ class Auth
             Router::redirect('/register');
         }
 
+        var_dump($_FILES['avatar']);
+        Helper::uploadAvatar($avatar);
         echo "Валидация прошла успешно, движемся дальше!";
     }
 }
