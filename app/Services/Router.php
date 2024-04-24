@@ -14,9 +14,15 @@ class Router
         ];
     }
 
-    public static function post($uri, $class, $method, $formdata = false, $files = false)
-    {
+    public static function post(
+        $uri,
+        $class,
+        $method,
+        $formdata = false,
+        $files = false
+    ) {
         self::$list[] = [
+
             "uri" => $uri,
             "class" => $class,
             "method" => $method,
@@ -26,25 +32,26 @@ class Router
         ];
     }
 
+    public static function redirect(string $path)
+    {
+        header("Location: $path");
+        die();
+    }
+
     public static function enable(): void
     {
         $page = $_GET['q'] ?? '';
 
         foreach (self::$list as $route) {
-            if ($route["uri"] === '/' . $page){
-                if (isset($route['post']) && $route["post"] === true && $_SERVER["REQUEST_METHOD"] === "POST"){
-
-                    $action  = new $route["class"];
-                    $method = $route["method"];
-                    if ($route['formdata'] && $route['files'])
-                    {
-                        $action->$method($_POST, $_FILES);
-                    } elseif($route['formdata'] && !$route['files'])
-                    {
-                        $action->$method($_POST);
-                    } else{
-                        $action->$method();
-                    }
+            if ($route["uri"] === '/' . $page) {
+                if (isset($route['post']) && $route["post"] === true
+                    && $_SERVER["REQUEST_METHOD"] === "POST"
+                ) {
+                    self::callWithParams(
+                        $route,
+                        $route['formdata'],
+                        $route['files']
+                    );
                     die();
                 } else {
                     require_once 'views/pages/' . $route['pageName'] . '.php';
@@ -58,5 +65,18 @@ class Router
     private static function ShowPageNotFound(): void
     {
         require_once "views/errors/404.php";
+    }
+
+    private static function callWithParams($route, $post, $files): void
+    {
+        $action = new $route["class"];
+        $method = $route["method"];
+        if ($post && $files) {
+            $action->$method($_POST, $_FILES);
+        } elseif ($post && !$files) {
+            $action->$method($_POST);
+        } else {
+            $action->$method();
+        }
     }
 }
