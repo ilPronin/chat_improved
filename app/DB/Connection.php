@@ -1,5 +1,10 @@
-    <?php
-require_once 'config.php';
+<?php
+
+namespace App\DB;
+use PDO;
+use PDOException;
+
+require_once 'config/DB_config.php';
 final class Connection
 {
     private static ?self $instance = null;
@@ -40,13 +45,3 @@ final class Connection
         return self::$connection;
     }
 }
-
-$pdo = Connection::getInstance()::getConnection();
-$queryGetMessages = "SELECT users.name, users.email, users.avatar, messages.message, messages.file, messages.date
-    FROM users
-    INNER JOIN messages
-    ON users.id=messages.user_id;";
-
-$qryMessages = $pdo->prepare($queryGetMessages);
-$qryMessages->execute();
-print_r($qryMessages->fetchAll(PDO::FETCH_ASSOC));

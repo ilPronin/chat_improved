@@ -13,7 +13,7 @@ class Helper
         }
 
         $ext = pathinfo($avatar['name'], PATHINFO_EXTENSION);
-        $fileName = 'file_' . time() . ".$ext";
+        $fileName = 'avatar_' . time() . ".$ext";
         $path = "$uploadPath/$fileName";
 
         if (!move_uploaded_file($avatar['tmp_name'], $path)) {
