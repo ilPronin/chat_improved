@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Implementation;
 
 class Router
 {
@@ -20,7 +20,7 @@ class Router
         $method,
         $formdata = false,
         $files = false
-    ) {
+    ): void {
         self::$list[] = [
 
             "uri" => $uri,
@@ -52,11 +52,10 @@ class Router
                         $route['formdata'],
                         $route['files']
                     );
-                    die();
                 } else {
                     require_once 'views/pages/' . $route['pageName'] . '.php';
-                    die();
                 }
+                die();
             }
         }
         self::ShowPageNotFound();

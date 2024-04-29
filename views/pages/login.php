@@ -1,6 +1,6 @@
 <?php
 
-use App\Services\Page;
+use App\Services\Implementation\Page;
 
 ?>
 

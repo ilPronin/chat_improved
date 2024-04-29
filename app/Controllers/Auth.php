@@ -3,9 +3,11 @@
 namespace App\Controllers;
 
 use App\DB\Database;
-use App\Services\Helper;
-use App\Services\Router;
-use App\Services\Validator;
+use App\Services\Implementation\Helper;
+use App\Services\Implementation\Router;
+use App\Services\Aggregates\RegisterFormValidationAggregate;
+//use App\Services\Validator;
+use App\Models\User;
 
 class Auth
 {
@@ -13,44 +15,44 @@ class Auth
     {
         session_start();
 
-        $name = htmlspecialchars($data['name']);
-        $email = htmlspecialchars($data['email']);
-        $avatar = $files['avatar']['error'] == 0 ? $files['avatar'] : null;
-        $password = htmlspecialchars($data['password']);
-        $passwordConfirmation = htmlspecialchars(
-            $data['password_confirmation']
-        );
-        $avatarPath = null;
+        $avatar = Helper::getLoadedAvatar($files['avatar']);
+        $validator = new RegisterFormValidationAggregate($data, $avatar);
+        $errors = $validator->getValidationResult();
 
-        $validator = new Validator(
-            $name, $email, $password, $passwordConfirmation, $avatar
-        );
-        $errors = $validator->getValidationErrors();
         $_SESSION['validate'] = $errors;
 
         if (count($errors)) {
+            echo "<pre>";
+            var_dump($_SESSION['validate']);
+            var_dump($avatar);
+            var_dump($avatar !== null);
+            echo "</pre>";
             Router::redirect('/register');
         }
 
-        if ($avatar !== null) {
-            $avatarPath = Helper::uploadAvatar($avatar);
-        }
+        $avatarPath = Helper::uploadAvatar($avatar);
+        var_dump($avatarPath);
 
-        $db = new Database();
+        $user = new User();
+        $user->register($data, $avatarPath);
 
-        $query
-            = "INSERT INTO users (name, email, avatar, password)
-            VALUES (:name, :email, :avatar, :password)";
-        $params = [
-            'name' => $name,
-            'email' => $email,
-            'avatar' => $avatarPath,
-            'password' => password_hash($password, PASSWORD_DEFAULT)
-        ];
-
-        $db->addData($query, $params);
+//        $db = new DatabaseTrait();
+//
+//        $query
+//            = "INSERT INTO users (name, email, avatar, password)
+//            VALUES (:name, :email, :avatar, :password)";
+//        $params = [
+//            'name' => $name,
+//            'email' => $email,
+//            'avatar' => $avatarPath,
+//            'password' => password_hash($password, PASSWORD_DEFAULT)
+//        ];
+//
+//        $db->addData($query, $params);
         Router::redirect('/login');
-        echo "Валидация прошла успешно. Пользователь добавлен!";
+//        echo "Валидация прошла успешно. Пользователь добавлен!";
+
+        session_destroy();
     }
 }
 

@@ -1,6 +1,7 @@
 <?php
-use App\Services\Router;
+
 use App\Controllers\Auth;
+use App\Services\Implementation\Router;
 
 Router::page('/', 'home');
 Router::page('/login', 'login');
