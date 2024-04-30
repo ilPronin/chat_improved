@@ -24,12 +24,7 @@ class Auth
         Helper::setOldValue('email', $_POST['email']);
 
         $user = new User();
-        $user->isUserRegisteredMessage($data['email'], 'register');
-        if (count($_SESSION['validate'] )) {
-//            echo "<pre>";
-//            var_dump($_SESSION['validate']);
-//            echo "</pre>";
-//            die();
+        if (count($errors)) {
             Router::redirect('/register');
         }
 
