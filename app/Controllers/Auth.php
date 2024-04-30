@@ -2,9 +2,10 @@
 
 namespace App\Controllers;
 
-use App\Services\Implementation\Helper;
+    use App\Services\Implementation\Helper;
 use App\Services\Implementation\Router;
 use App\Services\Aggregates\RegisterFormValidationAggregate;
+use App\Services\Aggregates\LoginFormValidationAggregate;
 use App\Models\User;
 
 class Auth
@@ -23,9 +24,12 @@ class Auth
         Helper::setOldValue('email', $_POST['email']);
 
         $user = new User();
-        $user->isRegisteredMessage($data['email']);
-
-        if (count($errors)) {
+        $user->isUserRegisteredMessage($data['email'], 'register');
+        if (count($_SESSION['validate'] )) {
+//            echo "<pre>";
+//            var_dump($_SESSION['validate']);
+//            echo "</pre>";
+//            die();
             Router::redirect('/register');
         }
 
@@ -34,5 +38,34 @@ class Auth
         Router::redirect('/login');
 
         session_destroy();
+    }
+
+    public function login($data)
+    {
+        session_start();
+
+        $validator = new LoginFormValidationAggregate($data, 'login');
+        $errors = $validator->getValidationResult();
+
+        $_SESSION['validate'] = $errors;
+
+        Helper::setOldValue('email', $_POST['email']);
+
+        $user = new User();
+
+        if (count($errors)) {
+            Router::redirect('/login');
+        }
+
+        $currentUser = $user->login($data['email']);
+
+        if (!password_verify($data['password'], $currentUser['password'])){
+            $_SESSION['validate']['password'] = 'Неверный пароль';
+            Router::redirect('/login');
+        }
+
+        $_SESSION['user']['id'] = $currentUser['id'];
+
+        Router::redirect('/messenger');
     }
 }

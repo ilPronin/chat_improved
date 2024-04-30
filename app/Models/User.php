@@ -30,6 +30,14 @@ class User
         ]);
     }
 
+    public function login(string $email)
+    {
+        $stmt = $this->prepare('SELECT * FROM users WHERE `email` = :email');
+        $stmt->execute(['email' => $email]);
+        return  $stmt->fetch(\PDO::FETCH_ASSOC);
+
+    }
+
     public function isRegistered($email)
     {
         $stmt = $this->prepare('SELECT id FROM users WHERE email = :email LIMIT 1');
@@ -37,10 +45,14 @@ class User
         return $stmt->fetch() ? true : false;
     }
 
-    public function isRegisteredMessage($email)
+    function isUserRegisteredMessage($email, string $action)
     {
-        if ($this->isRegistered($email)){
+        if ($this->isRegistered($email) && $action === 'register'){
             $_SESSION['validate']['email'] = 'Пользователь с таким E-mail уже зарегистрирован';
+        } elseif (!$this->isRegistered($email) && $action === 'login'){
+            $_SESSION['validate']['email'] = 'Пользователь с таким E-mail еще не зарегистрирован';
+        } else{
+            die();
         }
     }
 }
