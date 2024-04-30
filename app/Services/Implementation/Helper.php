@@ -31,4 +31,19 @@ class Helper
         return $avatar['error'] === UPLOAD_ERR_OK ? $avatar : null;
     }
 
+    public static function setOldValue(string $field, string $value): void
+    {
+        $_SESSION['old'][$field] = $value;
+    }
+
+    public static function getOldValue(string $field): string
+    {
+        $value = $_SESSION['old'][$field] ?? '';
+        unset($_SESSION['old'][$field]);
+        return $value;
+    }
+
+
+
+
 }

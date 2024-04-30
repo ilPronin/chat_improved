@@ -1,6 +1,7 @@
 <?php
 
 use App\Services\Implementation\Page;
+use App\Services\Implementation\Helper;
 
 session_start();
 $errors = $_SESSION['validate'] ?? [];
@@ -22,7 +23,7 @@ $errors = $_SESSION['validate'] ?? [];
                     <span class="error-message"><?= $errors['name'] ?></span>
                 <?php endif; ?>
             </div>
-            <input type="text" id="name" name="name" placeholder="" value="" required>
+            <input type="text" id="name" name="name" placeholder="" value="<?= Helper::getOldValue('name')?>" required>
         </div>
 
         <div class="form-group">
@@ -32,7 +33,7 @@ $errors = $_SESSION['validate'] ?? [];
                     <span class="error-message"><?= $errors['email'] ?></span>
                 <?php endif; ?>
             </div>
-            <input type="text" id="email" name="email" placeholder="" value="" required>
+            <input type="text" id="email" name="email" placeholder="" value="<?= Helper::getOldValue('email')?>" required>
         </div>
 
         <div class="upload_file">
@@ -55,8 +56,8 @@ $errors = $_SESSION['validate'] ?? [];
             <div class="form-group">
                 <div class="label-form-group">
                     <label for="email" class="form-label">Подтверждение пароля</label>
-                    <?php if (isset($errors['password'])) : ?>
-                        <span class="error-message"><?= $errors['password'] ?></span>
+                    <?php if (isset($errors['passwordConfirmation'])) : ?>
+                        <span class="error-message"><?= $errors['passwordConfirmation'] ?></span>
                     <?php endif; ?>
                 </div>
                 <input type="password" id="password_confirmation" name="password_confirmation" placeholder="" value="" required>
