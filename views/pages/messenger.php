@@ -8,6 +8,11 @@ session_start()
 <html lang="en">
 <?php Page::addHead('MESSENGER');?>
 <body>
-<h1><?=$_SESSION['user']['id']?></h1>
+<div class="container">
+    <?php
+    Page::addComponent('list');
+    Page::addComponent('chat');
+    ?>
+</div>
 </body>
 </html>
