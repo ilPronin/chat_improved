@@ -7,6 +7,7 @@ session_start()
 <!doctype html>
 <html lang="en">
 <?php Page::addHead('MESSENGER');?>
+<script src="/scripts/script.js"></script>
 <body>
 <div class="container">
     <?php

@@ -1,7 +1,7 @@
 <div class="messageForm">
     <form action="/messenger/sendMessage" method="post" enctype="multipart/form-data">
         <div class="file">
-            <label class="input-file">
+            <label class="file_input">
                 <input type="file" id="file" name="file">
                 <img src="/assets/icons/paperclip.png" class="paperclip" alt="">
             </label>

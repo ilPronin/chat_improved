@@ -19,7 +19,8 @@ trait DatabaseTrait
         }
     }
 
-    public function prepare($query) {
+    public function prepare($query)
+    {
         $stmt = $this->pdo->prepare($query);
         return $stmt;
     }

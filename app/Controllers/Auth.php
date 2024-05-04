@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-    use App\Services\Implementation\Helper;
+use App\Services\Implementation\Helper;
 use App\Services\Implementation\Router;
 use App\Services\Aggregates\RegisterFormValidationAggregate;
 use App\Services\Aggregates\LoginFormValidationAggregate;

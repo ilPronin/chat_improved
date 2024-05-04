@@ -95,21 +95,28 @@ input[type='file'] {
     display: flex;
     justify-content: center;
     margin-bottom: 20px;
+    label{
+        color: white;
+        font-weight: 500;
+        text-transform: uppercase;
+        /* padding: 15px 40px; */
+        font-size: 16px;
+    }
 }
-/*.input-file {*/
-/*    display: block;*/
-/*    align-items: center;*/
-/*    text-transform: uppercase;*/
-/*    color: white;*/
-/*    background: #2691d9;*/
-/*    text-align: center;*/
-/*    padding: 15px 40px;*/
-/*    font-size: 14px;*/
-/*    letter-spacing: 1.5px;*/
-/*    user-select: none;*/
-/*    cursor: pointer;*/
-/*    border-radius: 25px;*/
-/*}*/
+.input-file {
+    display: block;
+    align-items: center;
+    text-transform: uppercase;
+    color: white;
+    background: #2691d9;
+    text-align: center;
+    padding: 15px 40px;
+    font-size: 14px;
+    letter-spacing: 1.5px;
+    user-select: none;
+    cursor: pointer;
+    border-radius: 25px;
+}
 
 .input-file:active {
     transform: scale(0.95);
@@ -193,12 +200,16 @@ button[type='submit'] {
     color: white;
 }
 
+.hidden{
+    display: none;
+}
+
 .list{
     display: flex;
     flex: 1;
     flex-direction: column;
 
-    .userInfo{
+    .userData{
         padding: 20px;
         display: flex;
         align-items: center;
@@ -212,6 +223,17 @@ button[type='submit'] {
                 height: 50px;
                 border-radius: 50%;
                 object-fit: cover;
+            }
+            .userInfo{
+                h2{
+                    margin: 0;
+                }
+                p{
+                    margin: 0;
+                    font-size: 14px;
+                    font-weight: 300;
+                    color: #d1d1d1;
+                }
             }
         }
     }
@@ -283,11 +305,25 @@ button[type='submit'] {
                     font-weight: 500;
                 }
                 p{
+
                     font-size: 14px;
                     font-weight: 300;
                     text-transform: none;
                     color: white;
                     margin: 0;
+                }
+            }
+            .online{
+                width: 10px;
+                height: 10px;
+                background-color: #26d96e;
+                border-radius: 50%;
+            }
+            .offline{
+                p{
+                    font-size: 12px;
+                    font-weight: 300;
+                    color: #d1d1d1;
                 }
             }
         }
@@ -311,6 +347,66 @@ button[type='submit'] {
         background-color: rgba(17, 25, 40, 0.5); /* Цвет бегунка */
         border-radius: 20px; /* Округление бегунка */
         /*border: 3px solid #050c26; !* Оформление границ бегунка *!*/
+    }
+    .addUser{
+        width: max-content;
+        height: max-content;
+        padding: 30px;
+        background-color: rgba(17, 25, 40, 0.75);
+        border-radius: 12px;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+        form{
+            display: flex;
+            gap: 20px;
+
+            input{
+                padding: 20px;
+                border-radius: 10px;
+                border: none;
+                outline: none;
+            }
+
+            button{
+                padding: 20px;
+                border-radius: 10px;
+                background-color: #2691d9;
+                color: white;
+                border: none;
+                cursor: pointer;
+            }
+        }
+
+        .user{
+            margin-top: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            .detail{
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                img{
+                    width: 50px;
+                    height: 50px;
+                    border-radius: 50%;
+                    object-fit: cover;
+                }
+            }
+            button{
+                padding: 10px;
+                border-radius: 10px;
+                background-color: #2691d9;
+                color: white;
+                border: none;
+                cursor: pointer;
+            }
+        }
     }
 }
 .chat{
