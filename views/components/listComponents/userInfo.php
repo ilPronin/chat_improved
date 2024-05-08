@@ -4,9 +4,6 @@
     if(isset($_SESSION['user']['id'])){
         $user = new User();
         $currentUser = $user->getCurrentUser($_SESSION['user']['id']);
-//        echo "<pre>";
-//        print_r($currentUser);
-//        echo "</pre>";
     }
 ?>
 

@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-//use App\DB\Database;
-
 use App\Services\Traits\DatabaseTrait;
 
 class User
@@ -45,17 +43,6 @@ class User
         return $stmt->fetch() ? true : false;
     }
 
-//    function isUserRegisteredMessage($email, string $action)
-//    {
-//        if ($this->isRegistered($email) && $action === 'register'){
-//            $_SESSION['validate']['email'] = 'Пользователь с таким E-mail уже зарегистрирован';
-//        } elseif (!$this->isRegistered($email) && $action === 'login'){
-//            $_SESSION['validate']['email'] = 'Пользователь с таким E-mail еще не зарегистрирован';
-//        } else{
-//            die();
-//        }
-//    }
-
     function getCurrentUser($id){
         $query = 'SELECT * FROM users WHERE id = :id';
         $stmt = $this->prepare($query);
@@ -81,12 +68,12 @@ class User
 
             foreach ($chats as $chat){
                 if ($chat['user_1'] == $user_id) {
-                    $query2 = 'SELECT name, email, avatar, last_seen
+                    $query2 = 'SELECT id, name, email, avatar, last_seen
                                FROM users WHERE id=?';
                     $stmt2 = $this->prepare($query2);
                     $stmt2->execute([$chat['user_2']]);
                 } else {
-                    $query2 = 'SELECT name, email, avatar, last_seen
+                    $query2 = 'SELECT id, name, email, avatar, last_seen
                                FROM users WHERE id=?';
                     $stmt2 = $this->prepare($query2);
                     $stmt2->execute([$chat['user_1']]);

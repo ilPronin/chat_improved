@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Services\Implementation;
+use DateTime;
+use JetBrains\PhpStorm\Language;
 
 class Helper
 {
@@ -62,7 +64,33 @@ class Helper
         }
     }
 
+    public static function uploadFile($file)
+    {
+        $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
+        $imgExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+        $docExtensions = ['txt'];
+        $path = '';
 
+        if (in_array($extension, $imgExtensions)){
+            $uploadPath = 'uploads/images';
+            $fileName = 'image_' . time() . ".$extension";
+            $path = "$uploadPath/$fileName";
+        } elseif (in_array($extension, $docExtensions)){
+            $uploadPath = 'uploads/documents';
+            $fileName = 'file_' . time() . ".$extension";
+            $path = "$uploadPath/$fileName";
+        }
+        if (!move_uploaded_file($file['tmp_name'], $path)) {
+            die('Ошибка при загрузке фото на сервер');
+        }
+        return $path;
+    }
 
-
+    public static function formatDate($dateForFormat)
+    {
+        setlocale(LC_TIME, 'ru_RU');
+        $timestamp = strtotime($dateForFormat);
+        $date = date('d.m.Y H:i', $timestamp);
+        return $date;
+    }
 }
