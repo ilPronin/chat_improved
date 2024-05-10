@@ -46,9 +46,5 @@ let onSearchAddButtonClick = (e) => {
     })
 };
 
-// const searchButton = $(".search-button");
-// const searchForm = $(".searchNewUser");
 
-// searchForm.on('submit', (e) => e.preventDefault());
-// searchButton.on('click', (e) => onSearchButtonClick(e));
 

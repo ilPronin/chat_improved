@@ -228,6 +228,14 @@ button[type='submit'] {
                 }
             }
         }
+        .exit{
+            width: 37px;
+            height: 37px;
+            background-color: rgba(17, 25, 40, 0.5);
+            padding: 5px 0 5px 5px ;
+            border-radius: 10px;
+            cursor: pointer ;
+        }
     }
 
     .search {
@@ -580,7 +588,6 @@ button[type='submit'] {
     }
 }
 
-
-
-
-
+.pageNotFound{
+    color: white;
+}

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Services\Traits\DatabaseTrait;
+use PDO;
 
 class User
 {
@@ -13,7 +14,7 @@ class User
         $this->setConnection();
     }
 
-    public function register($data, $avatarPath)
+    public function register($data, $avatarPath): void
     {
         $hashedPassword = password_hash($data['password'], PASSWORD_DEFAULT);
         $stmt = $this->prepare(
@@ -32,24 +33,26 @@ class User
     {
         $stmt = $this->prepare('SELECT * FROM users WHERE `email` = :email');
         $stmt->execute(['email' => $email]);
-        return  $stmt->fetch(\PDO::FETCH_ASSOC);
-
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function isRegistered($email)
+    public function isRegistered($email): bool
     {
-        $stmt = $this->prepare('SELECT id FROM users WHERE email = :email LIMIT 1');
+        $stmt = $this->prepare(
+            'SELECT id FROM users WHERE email = :email LIMIT 1'
+        );
         $stmt->execute(['email' => $email]);
-        return $stmt->fetch() ? true : false;
+        return (bool)$stmt->fetch();
     }
 
-    function getCurrentUser($id){
+    function getCurrentUser($id)
+    {
         $query = 'SELECT * FROM users WHERE id = :id';
         $stmt = $this->prepare($query);
         $stmt->execute(['id' => $id]);
-        if ($stmt->rowCount() === 1){
-            $user = $stmt->fetch(\PDO::FETCH_ASSOC);
-        }else{
+        if ($stmt->rowCount() === 1) {
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        } else {
             $user = [];
         }
         return $user;
@@ -61,12 +64,11 @@ class User
         $stmt = $this->prepare($query);
         $stmt->execute([$user_id, $user_id]);
 
-        if ($stmt->rowCount() > 0)
-        {
+        if ($stmt->rowCount() > 0) {
             $chats = $stmt->fetchAll();
             $user_data = [];
 
-            foreach ($chats as $chat){
+            foreach ($chats as $chat) {
                 if ($chat['user_1'] == $user_id) {
                     $query2 = 'SELECT id, name, email, avatar, last_seen
                                FROM users WHERE id=?';
@@ -79,29 +81,18 @@ class User
                     $stmt2->execute([$chat['user_1']]);
                 }
                 $allChats = $stmt2->fetchAll();
-                array_push($user_data, $allChats[0]);
+                $user_data[] = $allChats[0];
             }
             return $user_data;
-        }else{
-            $chat = [];
-            return $chat;
+        } else {
+            return [];
         }
     }
-    function lastSeenUpdate($user_id)
+
+    function lastSeenUpdate($user_id): void
     {
         $query = 'UPDATE users SET last_seen = NOW() WHERE id = ?';
         $stmt = $this->prepare($query);
         $stmt->execute([$user_id]);
     }
-
-    function searchNewUser($username)
-    {
-        $query = 'SELECT * FROM users WHERE name = ?';
-        $stmt = $this->prepare($query);
-        $stmt->execute([$username]);
-
-        $newUsers = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-        return $newUsers;
-    }
-
 }

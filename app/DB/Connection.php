@@ -27,10 +27,7 @@ final class Connection
         }
     }
 
-    private function __clone()
-    {
-        // TODO: Implement __clone() method.
-    }
+    private function __clone(){}
 
     public static function getInstance(): self
     {

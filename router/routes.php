@@ -19,5 +19,6 @@ Router::post('/messenger/addNewUser', Messenger::class, 'addNewUser', true);
 Router::post('/messenger/renderUserToTalk', Messenger::class, 'renderUserToTalk', true);
 Router::post('/messenger/sendMessage', Messenger::class, 'sendMessage', true, true);
 Router::post('/messenger/renderMessages', Messenger::class, 'renderMessages', true);
+Router::post('/messenger/logout', Messenger::class, 'logout');
 
 Router::enable();

@@ -1,7 +1,10 @@
 <?php
+
 session_start();
+
 use App\Models\User;
 use App\Controllers\Messenger;
+
 $user = new User();
 $messenger = new Messenger();
 ?>
@@ -10,11 +13,12 @@ $messenger = new Messenger();
         <img src="/assets/icons/search.png" alt="search">
         <input type="text" placeholder="Поиск" id="searchText">
     </div>
-    <img src="/assets/icons/plus.png" alt="add" class="add" id="toggleImage" onclick="toggleImage()">
+    <img src="/assets/icons/plus.png" alt="add" class="add" id="toggleImage"
+         onclick="toggleImage()">
 </div>
 
 <script>
-    $(document).ready(function (){
+    $(document).ready(function () {
         $("#searchText").on("input", function () {
             let searchText = $(this).val();
 
@@ -22,7 +26,7 @@ $messenger = new Messenger();
                 {
                     key: searchText
                 },
-                function (data, status){
+                function (data, status) {
                     $(".chatList").html(data);
                 }
             );

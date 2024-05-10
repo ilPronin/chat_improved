@@ -10,7 +10,7 @@ $user = new User();
 $chat = new Chat();
 
 $chats = $user->getChat($_SESSION['user']['id']);
-//print_r($chats);
+
 ?>
 <div class="chatList">
     <?php if (!empty($chats)) { ?>
@@ -61,7 +61,6 @@ $chats = $user->getChat($_SESSION['user']['id']);
                 }
             })
         })
-
     </script>
 
 </div>

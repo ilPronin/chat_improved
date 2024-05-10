@@ -9,7 +9,8 @@ $errors = $_SESSION['validate'] ?? [];
 
 <!doctype html>
 <html lang="en">
-<?php Page::addHead('LOGIN'); ?>
+<?php
+Page::addHead('LOGIN'); ?>
 <body>
 <div class="center">
     <form action="/auth/login" method="post">
@@ -19,8 +20,11 @@ $errors = $_SESSION['validate'] ?? [];
             <div class="label-form-group">
                 <label class="form-label" for="email">E-mail</label>
                 <?php
-                if (isset($errors['email']) || isset($errors['checkEmail'])) : ?>
-                    <span class="error-message"><?= $errors['email'] ?? $errors['checkEmail']?></span>
+                if (isset($errors['email'])
+                    || isset($errors['checkEmail'])
+                ) : ?>
+                    <span class="error-message"><?= $errors['email'] ??
+                            $errors['checkEmail'] ?></span>
                 <?php
                 endif; ?>
             </div>
@@ -31,6 +35,12 @@ $errors = $_SESSION['validate'] ?? [];
         <div class="form-group">
             <div class="label-form-group">
                 <label for="email" class="form-label">Пароль</label>
+                <?php
+                if (isset($errors['checkPasswordValidator'])) : ?>
+                    <span class="error-message"><?= $_SESSION['validate']['password']
+                            ?? '' ?></span>
+                <?php
+                endif; ?>
             </div>
             <input type="password" id="password" name="password"
                    placeholder="" value="" required>

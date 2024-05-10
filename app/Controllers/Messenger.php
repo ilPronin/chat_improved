@@ -6,6 +6,7 @@ use App\Models\Chat;
 use App\Models\User;
 use App\Services\Aggregates\FileValidationAggregate;
 use App\Services\Implementation\Helper;
+use App\Services\Implementation\Router;
 
 class Messenger
 {
@@ -173,11 +174,13 @@ class Messenger
             $messages = $chat->getMessages($sender, $recipient);
 
             foreach ($messages as $message) {
+
                 if ($message['sender'] === $sender){
                     $messageToHTMl = '';
                     $messageToHTMl =
                         '<div class="message own">
                             <div class="text">';
+
                     if ($message['file'] !== null){
                         if (str_ends_with($message['file'], 'txt')){
                             $messageToHTMl .= '<p><a href="'. $message['file'] .'" download>'. $message['file'] .'</a></p>';
@@ -185,16 +188,19 @@ class Messenger
                             $messageToHTMl .= '<img src="'. $message['file'] .'" alt="">';
                         }
                     }
+
                     $messageToHTMl .= '
                                 <p>'. $message['message'] .'</p>
                                 <span>'. Helper::formatDate($message['date']) .'</span>
                             </div>
                         </div>';
+
                 }else {
                     $messageToHTMl =
                         '<div class="message">
                             <img src="'. $userToTalk['avatar'] .'" alt="">
                             <div class="text">';
+
                     if ($message['file'] !== null){
                         if (str_ends_with($message['file'], 'txt')){
                             $messageToHTMl .= '<p><a href="'. $message['file'] .'" download>'. $message['file'] .'</a></p>';
@@ -202,6 +208,7 @@ class Messenger
                             $messageToHTMl .= '<img src="'. $message['file'] .'" alt="">';
                         }
                     }
+
                     $messageToHTMl .= '
                                 <p>'. $message['message'] .'</p>
                                 <span>'. Helper::formatDate($message['date']).'</span>
@@ -211,5 +218,11 @@ class Messenger
                 echo $messageToHTMl;
             }
         }
+    }
+
+    public function logout()
+    {
+            unset($_SESSION['user']['id']);
+            Router::redirect('/login');
     }
 }

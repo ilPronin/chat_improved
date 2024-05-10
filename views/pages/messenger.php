@@ -1,7 +1,13 @@
 <?php
 use App\Services\Implementation\Page;
+use App\Services\Implementation\Router;
+use App\Services\Implementation\Helper;
 
-session_start()
+
+session_start();
+
+Helper::checkAuth();
+
 ?>
 
 <!doctype html>

@@ -86,11 +86,17 @@ class Helper
         return $path;
     }
 
-    public static function formatDate($dateForFormat)
+    public static function formatDate($dateForFormat): string
     {
         setlocale(LC_TIME, 'ru_RU');
         $timestamp = strtotime($dateForFormat);
-        $date = date('d.m.Y H:i', $timestamp);
-        return $date;
+        return date('d.m.Y H:i', $timestamp);
+    }
+
+    public static function checkAuth(): void
+    {
+        if (empty($_SESSION['user']['id'])){
+            Router::redirect('/login');
+        }
     }
 }

@@ -15,4 +15,20 @@
             <p><?= $currentUser['email']?></p>
         </div>
     </div>
+    <img src="/assets/icons/exit.png" alt="exit" class="exit" id="exit">
 </div>
+
+<script>
+    $(document).ready(function () {
+        $('#exit').on('click', function (e) {
+            $.ajax({
+                url: '/messenger/logout',
+                method: 'post',
+
+                success: function () {
+                    location.reload();
+                }
+            })
+        })
+    })
+</script>

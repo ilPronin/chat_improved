@@ -24,6 +24,7 @@ class Auth
         Helper::setOldValue('email', $_POST['email']);
 
         $user = new User();
+
         if (count($errors)) {
             Router::redirect('/register');
         }
